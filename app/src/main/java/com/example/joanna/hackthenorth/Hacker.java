@@ -22,11 +22,11 @@ public class Hacker {
     private ArrayList<Skill> mSkills;
 
     public Hacker(JsonObject object) throws JSONException {
-        mName = String.valueOf(object.get("name"));
-        mPicture = String.valueOf(object.get("picture"));
-        mCompany = String.valueOf(object.get("company"));
-        mEmail = String.valueOf(object.get("email"));
-        mPhone = String.valueOf(object.get("phone"));
+        mName = object.get("name").getAsString();
+        mPicture = object.get("picture").getAsString();
+        mCompany = object.get("company").getAsString();
+        mEmail = object.get("email").getAsString();
+        mPhone = object.get("phone").getAsString();
         mLatitude = object.get("latitude").getAsFloat();
         mLongitude = object.get("longitude").getAsFloat();
 
