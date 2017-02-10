@@ -22,6 +22,7 @@ public class HackerListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mListView = (ListView) getActivity().findViewById(R.id.hacker_listview);
         mAdapter = new HackerListAdapter((HackerListActivity) getActivity(), this);
+        mListView.setAdapter(mAdapter);
 
         return mListView;
     }
