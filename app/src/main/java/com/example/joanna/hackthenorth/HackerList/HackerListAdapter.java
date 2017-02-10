@@ -1,10 +1,13 @@
 package com.example.joanna.hackthenorth.HackerList;
 
 import android.content.ClipData;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,6 +19,7 @@ import android.widget.TextView;
 
 import com.example.joanna.hackthenorth.Hacker;
 import com.example.joanna.hackthenorth.R;
+import com.squareup.picasso.Picasso;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -30,39 +34,36 @@ public class HackerListAdapter extends RecyclerView.Adapter<HackerListAdapter.It
 
     private HackerListActivity mActivity;
     private ArrayList<Hacker> mHackers;
-    private Bitmap mBitmap;
 
     public HackerListAdapter(HackerListActivity activity, ArrayList<Hacker> hackers) {
         super();
         mActivity = activity;
         mHackers = hackers;
-
-//        setupHackers();
-    }
-
-//    private void setupHackers() {
-//        mHackers = HackerListActivity.hackerArrayList;
-//    }
-
-    @Override
-    public int getCount() {
-        return mHackers.size();
-    }
-
-    @Override
-    public Object getItem(int i) {
-        return mHackers.get(i);
     }
 
     @Override
     public ItemRowHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.hacker_list, parent, false);
+        View v = mActivity.getLayoutInflater().inflate(R.layout.hacker_list_item,parent,false);
         return new ItemRowHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(ItemRowHolder holder, int position) {
-
+    public void onBindViewHolder(ItemRowHolder holder, final int position) {
+        Hacker hacker = mHackers.get(position);
+        holder.rowName.setText(hacker.getmName());
+        if (holder.rowSkills.getText() == "") {
+            for (int i = 0; i < hacker.getmSkills().size(); i++) {
+                Hacker.Skill skill = hacker.getmSkills().get(i);
+                holder.rowSkills.append(skill.getmName() + " " + skill.getmRating().intValue());
+                if (i != hacker.getmSkills().size()-1) {
+                    holder.rowSkills.append(" • ");
+                }
+            }
+        }
+        holder.itemView.setTag(hacker);
+        holder.rowImage.setImageBitmap(null);
+        Picasso.with(holder.rowImage.getContext()).cancelRequest(holder.rowImage);
+        Picasso.with(holder.rowImage.getContext()).load(Uri.parse(hacker.getmPicture())).into(holder.rowImage);
     }
 
     @Override
@@ -72,67 +73,10 @@ public class HackerListAdapter extends RecyclerView.Adapter<HackerListAdapter.It
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mHackers.size();
     }
 
-    @Override
-    public View getView(final int i, View view, ViewGroup viewGroup) {
-        View row = view;
-//        HackerInfo hackerInfo = new HackerInfo();
-//        hackerInfo.row = row;
-
-        ItemRowHolder holder = new ItemRowHolder();
-//        hackerInfo.holder = holder;
-
-
-        if (row == null) {
-            LayoutInflater inflater = mActivity.getLayoutInflater();
-            holder = new ItemRowHolder();
-            holder.position = i;
-
-//            new ImageAsyncTask().execute(hackerInfo);
-
-            row = inflater.inflate(R.layout.hacker_list_item, viewGroup, false);
-
-            holder.
-            holder.rowName.setText(mHackers.get(i).getmName());
-
-            holder.rowImage =
-//            Bitmap bitmap = downloadBitmap(mHackers.get(i).getmPicture());
-//            if (mBitmap != null) {
-//                holder.rowImage.setImageBitmap(mBitmap);
-//            }
-
-            holder.rowSkills = (TextView) row.findViewById(R.id.hacker_skills);
-
-            row.setTag(holder);
-        }
-
-        new AsyncTask<ItemRowHolder, Void, Bitmap>() {
-            private ItemRowHolder holder;
-
-            @Override
-            protected Bitmap doInBackground(ItemRowHolder... params) {
-                holder = params[0];
-                Bitmap bitmap = downloadBitmap(mHackers.get(holder.position).getmPicture());
-                return bitmap;
-            }
-
-            @Override
-            protected void onPostExecute(Bitmap result) {
-                super.onPostExecute(result);
-                    // If this item hasn't been recycled already, hide the
-                    // progress and set and show the image
-                if (holder.position == i && holder.rowImage != null) {
-                    holder.rowImage.setImageBitmap(result);
-                }
-            }
-        }.execute(holder);
-        return row;
-    }
-
-    static class ItemRowHolder extends RecyclerView.ViewHolder {
-        int position;
+    class ItemRowHolder extends RecyclerView.ViewHolder {
         TextView rowName;
         ImageView rowImage;
         TextView rowSkills;
@@ -141,61 +85,28 @@ public class HackerListAdapter extends RecyclerView.Adapter<HackerListAdapter.It
             super(itemView);
             rowName = (TextView) itemView.findViewById(R.id.hacker_name);
             rowImage = (ImageView) itemView.findViewById(R.id.hacker_image);
+            rowSkills = (TextView) itemView.findViewById(R.id.hacker_skills);
+            itemView.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    // get position
+                    int pos = getAdapterPosition();
 
+                    Hacker hacker = mHackers.get(pos);
+                    Intent intent = new Intent(v.getContext(), HackerDetailActivity.class);
+
+                    intent.putExtra("name", hacker.getmName());
+                    intent.putExtra("picture", hacker.getmPicture());
+                    intent.putExtra("company", hacker.getmCompany());
+                    intent.putExtra("phone", hacker.getmPhone());
+                    intent.putExtra("email", hacker.getmEmail());
+//                    intent.putParcelableArrayListExtra("skills", (ArrayList<? extends Parcelable>) hacker.getmSkills());
+                    intent.putExtra("latitude", hacker.getmLatitude());
+                    intent.putExtra("longitude", hacker.getmLongitude());
+
+                    v.getContext().startActivity(intent);
+                }
+            });
         }
     }
-
-//    static class HackerInfo {
-//        View row;
-//        ItemRowHolder holder;
-//        int i;
-//        ViewGroup viewGroup;
-//    }
-
-    private Bitmap downloadBitmap(String url) {
-        HttpURLConnection urlConnection = null;
-        try {
-            URL uri = new URL(url);
-            urlConnection = (HttpURLConnection) uri.openConnection();
-
-            InputStream inputStream = urlConnection.getInputStream();
-            if (inputStream != null) {
-                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                return bitmap;
-            }
-        } catch (Exception e) {
-            urlConnection.disconnect();
-        } finally {
-            if (urlConnection != null) {
-                urlConnection.disconnect();
-            }
-        }
-        return null;
-    }
-//
-//    private class ImageAsyncTask extends AsyncTask<HackerInfo, Void, Bitmap> {
-//        ImageView rowImage;
-//
-////        @Override
-////        protected void onPreExecute() {
-////            LayoutInflater inflater = mActivity.getLayoutInflater();
-////
-////
-////            rowImage = (ImageView) mActivity.findViewById(R.id.hacker_image);
-////        }
-//
-//        @Override
-//        protected Bitmap doInBackground(HackerInfo... params) {
-//
-//            return downloadBitmap(mHackers.get(params[0].i).getmPicture());
-////            return null;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(Bitmap bitmap) {
-//            mBitmap = bitmap;
-//            HackerListAdapter.this.notifyDataSetChanged();
-//        }
-    }
-
-//}
+}

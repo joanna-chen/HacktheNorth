@@ -41,7 +41,7 @@ public class Hacker {
         }
     }
 
-    private static class Skill {
+    public static class Skill {
         private String mName;
         private Float mRating;
 

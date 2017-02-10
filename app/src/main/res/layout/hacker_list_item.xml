@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="100dp">
 
     <ImageView
         android:id="@+id/hacker_image"
@@ -8,11 +8,16 @@
         android:layout_height="wrap_content"/>
     <TextView
         android:id="@+id/hacker_name"
-        android:layout_toRightOf="@id/hacker_image"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="5dp"
+        android:textSize="16dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <TextView
         android:id="@+id/hacker_skills"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="100dp"
+        android:layout_below="@id/hacker_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 </RelativeLayout>

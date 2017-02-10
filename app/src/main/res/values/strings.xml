@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Hack the North</string>
+    <string name="phone">Phone</string>
+    <string name="email">Email</string>
+    <string name="skills">Skills</string>
+    <string name="location">Location</string>
 </resources>

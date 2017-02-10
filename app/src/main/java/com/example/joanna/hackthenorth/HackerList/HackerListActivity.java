@@ -5,10 +5,12 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.ListView;
 
-import com.example.joanna.hackthenorth.AsyncResponse;
 import com.example.joanna.hackthenorth.Hacker;
 import com.example.joanna.hackthenorth.R;
 import com.google.gson.Gson;
@@ -28,8 +30,6 @@ import java.util.ArrayList;
 
 public class HackerListActivity extends Activity {
 
-    private static final String FRAGMENT_TAG = "hacker_list_fragment";
-    public static ArrayList<Hacker> hackerArrayList = new ArrayList<>();
 
     static String JSONurl = "https://htn-interviews.firebaseio.com/users.json";
 
@@ -39,15 +39,7 @@ public class HackerListActivity extends Activity {
         new JsonTask().execute();
     }
 
-//    @Override
-//    protected void onStop() {
-//        super.onStop();
-//    }
-
     private class JsonTask extends AsyncTask<Void, Void, ArrayList<Hacker>> {
-
-//        public AsyncResponse delegate = null;
-
         JsonArray hackersJSONarray;
         String JSONurl = "https://htn-interviews.firebaseio.com/users.json";
 
@@ -94,8 +86,6 @@ public class HackerListActivity extends Activity {
                 }
                 return hackers;
 
-//                delegate.processFinish(hackers);
-
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -121,13 +111,15 @@ public class HackerListActivity extends Activity {
         protected void onPostExecute(ArrayList<Hacker> result) {
             super.onPostExecute(result);
 
-            ListView mListView;
+            RecyclerView mListView;
             HackerListAdapter mAdapter;
             setContentView(R.layout.hacker_list);
 
-            mListView = (ListView) HackerListActivity.this.findViewById(R.id.hacker_listview);
+            mListView = (RecyclerView) HackerListActivity.this.findViewById(R.id.hacker_listview);
             mAdapter = new HackerListAdapter(HackerListActivity.this, result);
             mListView.setAdapter(mAdapter);
+            mListView.setLayoutManager(new LinearLayoutManager(HackerListActivity.this));
+            mListView.setItemAnimator(new DefaultItemAnimator());
 
         }
     }
