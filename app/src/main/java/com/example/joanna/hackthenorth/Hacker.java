@@ -130,4 +130,8 @@ public class Hacker {
     public void setmSkills(ArrayList<Skill> mSkills) {
         this.mSkills = mSkills;
     }
+
+    public String toString() {
+        return mName + mSkills.get(0).mName + mSkills.get(0).mRating;
+    }
 }

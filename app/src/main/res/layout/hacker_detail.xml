@@ -1,56 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_marginTop="@dimen/activity_element_separator"
  android:layout_width="match_parent"
     android:layout_height="match_parent">
-        <ImageView
-            android:id="@+id/hacker_detail_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/hacker_detail_name"
-            android:layout_toRightOf="@id/hacker_detail_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/hacker_detail_company"
-            android:layout_below="@id/hacker_detail_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-
+    <ImageView
+        android:id="@+id/hacker_detail_image"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/banner_padding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/hacker_detail_name"
+        android:layout_marginTop="@dimen/detail_name_top_margin"
+        android:layout_toRightOf="@id/hacker_detail_image"
+        android:textSize="@dimen/detail_name_text_size"
+        android:textStyle="bold"
+        android:paddingLeft="@dimen/activity_element_separator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/hacker_detail_company"
+        android:textSize="@dimen/detail_info_text_size"
+        android:layout_below="@id/hacker_detail_name"
+        android:layout_toRightOf="@id/hacker_detail_image"
+        android:paddingLeft="@dimen/activity_element_separator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
     <TextView
         android:id="@+id/hacker_detail_phone_title"
-        android:layout_below="@id/hacker_detail_company"
+        android:layout_below="@id/hacker_detail_image"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:textColor="@color/crystalBlue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <TextView
         android:id="@+id/hacker_detail_phone"
+        android:textSize="@dimen/detail_info_text_size"
         android:layout_below="@id/hacker_detail_phone_title"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    <View
+        android:id="@+id/phone_divider"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="@dimen/divider_padding"
+        android:layout_marginTop="@dimen/divider_padding"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_height="1dp"
+        android:background="@color/coolGray"
+        android:layout_below="@id/hacker_detail_phone" />
      <TextView
         android:id="@+id/hacker_detail_email_title"
-         android:layout_below="@id/hacker_detail_phone"
+         android:layout_below="@id/phone_divider"
+         android:layout_marginLeft="@dimen/activity_horizontal_margin"
+         android:textColor="@color/crystalBlue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <TextView
         android:id="@+id/hacker_detail_email"
+        android:textSize="@dimen/detail_info_text_size"
         android:layout_below="@id/hacker_detail_email_title"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-     <TextView
+    <View
+        android:id="@+id/email_divider"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/divider_padding"
+        android:layout_marginTop="@dimen/divider_padding"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_height="1dp"
+        android:background="@color/coolGray"
+        android:layout_below="@id/hacker_detail_email" />
+    <TextView
         android:id="@+id/hacker_detail_skills_title"
-         android:layout_below="@id/hacker_detail_email"
+         android:layout_below="@id/email_divider"
+         android:layout_marginLeft="@dimen/activity_horizontal_margin"
+         android:textColor="@color/crystalBlue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <TextView
         android:id="@+id/hacker_detail_skills"
+        android:textSize="@dimen/detail_info_text_size"
+        android:lineSpacingExtra="@dimen/detail_line_spacing"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_below="@id/hacker_detail_skills_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+    <fragment
+        android:id="@+id/googleMap"
+        android:layout_width="match_parent"
+        android:layout_height="225dp"
+        class="com.google.android.gms.maps.MapFragment"
+        android:apiKey="AIzaSyDHX-p0ghUNhKxH_dXFsZUHewTUYyPOVWo"
+        android:layout_alignParentBottom="true"
+        />
     <TextView
         android:id="@+id/hacker_detail_location_title"
-        android:layout_below="@id/hacker_detail_skills"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_above="@id/googleMap"
+        android:textColor="@color/crystalBlue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
