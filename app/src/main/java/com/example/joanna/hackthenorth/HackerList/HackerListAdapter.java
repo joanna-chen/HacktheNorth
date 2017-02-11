@@ -1,19 +1,10 @@
 package com.example.joanna.hackthenorth.HackerList;
 
-import android.content.ClipData;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.ThumbnailUtils;
 import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Parcelable;
-import android.provider.MediaStore;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,9 +12,6 @@ import com.example.joanna.hackthenorth.Hacker;
 import com.example.joanna.hackthenorth.R;
 import com.squareup.picasso.Picasso;
 
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -56,6 +44,8 @@ public class HackerListAdapter extends RecyclerView.Adapter<HackerListAdapter.It
                 Hacker.Skill skill = hacker.getmSkills().get(i);
                 holder.rowSkills.append(skill.getmName() + " " + skill.getmRating().intValue());
                 if (i != hacker.getmSkills().size()-1) {
+                    holder.skillNames.add(skill.getmName());
+                    holder.skillRatings.add(skill.getmRating().intValue());
                     holder.rowSkills.append(" • ");
                 }
             }
@@ -80,12 +70,16 @@ public class HackerListAdapter extends RecyclerView.Adapter<HackerListAdapter.It
         TextView rowName;
         ImageView rowImage;
         TextView rowSkills;
+        ArrayList<String> skillNames;
+        ArrayList<Integer> skillRatings;
 
         public ItemRowHolder(View itemView) {
             super(itemView);
             rowName = (TextView) itemView.findViewById(R.id.hacker_name);
             rowImage = (ImageView) itemView.findViewById(R.id.hacker_image);
             rowSkills = (TextView) itemView.findViewById(R.id.hacker_skills);
+            skillNames = new ArrayList<>();
+            skillRatings = new ArrayList<>();
             itemView.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
@@ -100,7 +94,8 @@ public class HackerListAdapter extends RecyclerView.Adapter<HackerListAdapter.It
                     intent.putExtra("company", hacker.getmCompany());
                     intent.putExtra("phone", hacker.getmPhone());
                     intent.putExtra("email", hacker.getmEmail());
-//                    intent.putParcelableArrayListExtra("skills", (ArrayList<? extends Parcelable>) hacker.getmSkills());
+                    intent.putStringArrayListExtra("skillNames", skillNames);
+                    intent.putIntegerArrayListExtra("skillRatings", skillRatings);
                     intent.putExtra("latitude", hacker.getmLatitude());
                     intent.putExtra("longitude", hacker.getmLongitude());
 
