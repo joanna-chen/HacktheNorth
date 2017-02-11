@@ -43,9 +43,9 @@ public class HackerListAdapter extends RecyclerView.Adapter<HackerListAdapter.It
             for (int i = 0; i < hacker.getmSkills().size(); i++) {
                 Hacker.Skill skill = hacker.getmSkills().get(i);
                 holder.rowSkills.append(skill.getmName() + " " + skill.getmRating().intValue());
-                if (i != hacker.getmSkills().size()-1) {
-                    holder.skillNames.add(skill.getmName());
+                                    holder.skillNames.add(skill.getmName());
                     holder.skillRatings.add(skill.getmRating().intValue());
+                if (i != hacker.getmSkills().size()-1) {
                     holder.rowSkills.append(" • ");
                 }
             }
