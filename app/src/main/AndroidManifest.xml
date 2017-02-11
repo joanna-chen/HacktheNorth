@@ -9,6 +9,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <uses-library android:name="com.google.android.maps" />
         <activity android:name=".HackerList.HackerListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,6 +20,9 @@
         <activity android:name=".HackerList.HackerDetailActivity">
 
         </activity>
+        <meta-data
+       android:name="com.google.android.geo.API_KEY"
+       android:value="AIzaSyA6mtyFvF9GYNucthkemsZqFrNJJZ3xoLE"/>
     </application>
 
 </manifest>
