@@ -53,12 +53,17 @@ public class HackerListAdapter extends RecyclerView.Adapter<HackerListAdapter.It
         holder.itemView.setTag(hacker);
         holder.rowImage.setImageBitmap(null);
         Picasso.with(holder.rowImage.getContext()).cancelRequest(holder.rowImage);
-        Picasso.with(holder.rowImage.getContext()).load(Uri.parse(hacker.getmPicture())).into(holder.rowImage);
+        Picasso.with(holder.rowImage.getContext()).load(Uri.parse(hacker.getmPicture())).transform(new CircleTransform()).into(holder.rowImage);
     }
 
     @Override
     public long getItemId(int i) {
-        return 0;
+        return i;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     @Override

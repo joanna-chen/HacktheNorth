@@ -1,15 +1,12 @@
 package com.example.joanna.hackthenorth.HackerList;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.ListView;
 
 import com.example.joanna.hackthenorth.Hacker;
 import com.example.joanna.hackthenorth.R;
@@ -27,12 +24,10 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class HackerListActivity extends Activity {
-
-
-    static String JSONurl = "https://htn-interviews.firebaseio.com/users.json";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,8 +110,18 @@ public class HackerListActivity extends Activity {
             HackerListAdapter mAdapter;
             setContentView(R.layout.hacker_list);
 
+            ArrayList<Hacker> sortedHackers = result;
+            Log.w("boop", result.toString());
+
+            Collections.sort(sortedHackers, new Comparator<Hacker>() {
+                @Override
+                public int compare(Hacker h1, Hacker h2) {
+                    return h1.getmName().compareTo(h2.getmName());
+                }
+            });
+
             mListView = (RecyclerView) HackerListActivity.this.findViewById(R.id.hacker_listview);
-            mAdapter = new HackerListAdapter(HackerListActivity.this, result);
+            mAdapter = new HackerListAdapter(HackerListActivity.this, sortedHackers);
             mListView.setAdapter(mAdapter);
             mListView.setLayoutManager(new LinearLayoutManager(HackerListActivity.this));
             mListView.setItemAnimator(new DefaultItemAnimator());
