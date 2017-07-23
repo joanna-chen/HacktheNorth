@@ -36,6 +36,7 @@ public class HackerListActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.getActionBar().setbac
         new JsonTask().execute();
     }
 
